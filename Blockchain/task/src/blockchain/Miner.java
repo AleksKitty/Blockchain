@@ -11,7 +11,7 @@ public class Miner extends Thread {
         this.blockchain = blockchain;
     }
 
-    private synchronized void generateFirstBlock() {
+    private void generateFirstBlock() {
         Block block = new Block(1, id, "0");
         block.generateHashAndMagicNumber(blockchain.getZeroesNumber());
         block.setN(1); // always less than minute
