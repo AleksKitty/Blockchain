@@ -33,13 +33,15 @@ public class Miner extends Thread {
         addBlock(block);
     }
 
-    private synchronized void addBlock(Block block) {
+    private void addBlock(Block block) {
         // check integrity and add
         // otherwise skip
-        if (blockchain.validateBlockChain(block)) { // also synchronised method
+        synchronized (blockchain) {
+            if (blockchain.validateBlockChain(block)) { // also synchronised method
 
-            blockchain.getBlocks().add(block);  // also synchronised method
-            blockchain.correctZeroNumber(block); // also synchronised method
+                blockchain.getBlocks().add(block);  // also synchronised method
+                blockchain.correctZeroNumber(block); // also synchronised method
+            }
         }
     }
 

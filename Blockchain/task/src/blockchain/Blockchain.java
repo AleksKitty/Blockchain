@@ -1,19 +1,20 @@
 package blockchain;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Blockchain {
 
-    private final List<Block> blocks;
+    private final CopyOnWriteArrayList<Block> blocks;
 
     private int zeroesNumber;
 
     public Blockchain() {
-        this.blocks = Collections.synchronizedList(new LinkedList<>());
+        this.blocks = new CopyOnWriteArrayList<>();
         zeroesNumber = 0;
     }
 
-    public synchronized List<Block> getBlocks() {
+    public List<Block> getBlocks() {
         return blocks;
     }
 
@@ -21,7 +22,7 @@ public class Blockchain {
         return zeroesNumber;
     }
 
-    synchronized boolean validateBlockChain(Block block) {
+    boolean validateBlockChain(Block block) {
         if (blocks.size() == 0) {
             return true;
         }
@@ -36,7 +37,7 @@ public class Blockchain {
                 && block.getHash().startsWith(("0".repeat(Math.max(0, zeroesNumber))));
     }
 
-     synchronized void correctZeroNumber(Block block) {
+    void correctZeroNumber(Block block) {
         if (block.getGeneratedSeconds() < 60) {
             zeroesNumber = zeroesNumber + 1;
         } else {

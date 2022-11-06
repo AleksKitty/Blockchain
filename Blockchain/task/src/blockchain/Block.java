@@ -63,7 +63,7 @@ public class Block {
         this.generatedSeconds = (endTime - startTime) / 1000;
     }
 
-    public synchronized long getId() {
+    public long getId() {
         return id;
     }
 
