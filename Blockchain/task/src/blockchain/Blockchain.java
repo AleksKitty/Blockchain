@@ -9,9 +9,12 @@ public class Blockchain {
 
     private int zeroesNumber;
 
+    private CopyOnWriteArrayList<String> messageList;
+
     public Blockchain() {
         this.blocks = new CopyOnWriteArrayList<>();
         zeroesNumber = 0;
+        this.messageList = new CopyOnWriteArrayList<>();
     }
 
     public List<Block> getBlocks() {
@@ -45,6 +48,14 @@ public class Blockchain {
         }
 
         block.setN(zeroesNumber);
+    }
+
+    public CopyOnWriteArrayList<String> getMessageList() {
+        return messageList;
+    }
+
+    public void setMessageList(CopyOnWriteArrayList<String> messageList) {
+        this.messageList = messageList;
     }
 
     void printBlockchain() {

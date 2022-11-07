@@ -1,6 +1,7 @@
 package blockchain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Block {
 
@@ -37,6 +38,8 @@ public class Block {
      * number of zeroes for next blockchain
      * */
     private int N;
+
+    private List<String> messagesData;
 
     public Block(long id, long minerId, String previousHash) {
         this.id = id;
@@ -83,6 +86,24 @@ public class Block {
         N = n;
     }
 
+    public String getMessagesData() {
+        if (messagesData.size() == 0) {
+            return " no messages\n";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder().append('\n');
+
+        for (String message: messagesData) {
+            stringBuilder.append(message).append('\n');
+        }
+
+        return String.valueOf(stringBuilder);
+    }
+
+    public void setMessagesData(List<String> messagesData) {
+        this.messagesData = messagesData;
+    }
+
     @Override
     public String toString() {
         return "Block:" + '\n' +
@@ -92,6 +113,7 @@ public class Block {
                 "Magic number: " + magicNumber + '\n' +
                 "Hash of the previous block: " + '\n' + previousHash + '\n' +
                 "Hash of the block: " + '\n' + hash + '\n' +
+                "Block data:" + getMessagesData() +
                 "Block was generating for " + generatedSeconds + " seconds\n" +
                 "N was increased to " + N + "\n";
     }

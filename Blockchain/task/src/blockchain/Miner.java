@@ -1,6 +1,8 @@
 package blockchain;
 
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Miner extends Thread {
     private final long id;
@@ -24,6 +26,7 @@ public class Miner extends Thread {
             generateFirstBlock();
             return;
         }
+        sendMessage(); // not for the first block
 
         Block previousBlock = blockchain.getBlocks().get(blocks.size() - 1);
         // current new block
@@ -37,12 +40,28 @@ public class Miner extends Thread {
         // check integrity and add
         // otherwise skip
         synchronized (blockchain) {
-            if (blockchain.validateBlockChain(block)) { // also synchronised method
+            if (blockchain.validateBlockChain(block)) {
 
-                blockchain.getBlocks().add(block);  // also synchronised method
-                blockchain.correctZeroNumber(block); // also synchronised method
+                // set messages to a block
+                block.setMessagesData(blockchain.getMessageList());
+                blockchain.getBlocks().add(block);
+                blockchain.correctZeroNumber(block);
+
+                // empty message list
+                blockchain.setMessageList(new CopyOnWriteArrayList<>());
             }
         }
+    }
+
+    private void sendMessage() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        String message = id + ": " + "A".repeat(Math.max(1, new Random().nextInt(5)));
+        blockchain.getMessageList().add(message);
     }
 
     @Override
