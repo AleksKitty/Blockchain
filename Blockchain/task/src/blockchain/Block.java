@@ -1,5 +1,7 @@
 package blockchain;
 
+import blockchain.Encryption.Message;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -86,7 +88,7 @@ public class Block {
         N = n;
     }
 
-    public String getMessagesData() {
+    public String printMessagesData() {
         if (messagesData.size() == 0) {
             return " no messages\n";
         }
@@ -100,7 +102,12 @@ public class Block {
         return String.valueOf(stringBuilder);
     }
 
-    public void setMessagesData(List<String> messagesData) {
+    public void setMessagesData(List<Message> messages) {
+
+        List<String> messagesData = new ArrayList<>();
+        for (Message message: messages) {
+            messagesData.add(new String(message.getMessageData()));
+        }
         this.messagesData = messagesData;
     }
 
@@ -113,7 +120,7 @@ public class Block {
                 "Magic number: " + magicNumber + '\n' +
                 "Hash of the previous block: " + '\n' + previousHash + '\n' +
                 "Hash of the block: " + '\n' + hash + '\n' +
-                "Block data:" + getMessagesData() +
+                "Block data:" + printMessagesData() +
                 "Block was generating for " + generatedSeconds + " seconds\n" +
                 "N was increased to " + N + "\n";
     }

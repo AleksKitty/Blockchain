@@ -1,8 +1,12 @@
 package blockchain;
 
+import blockchain.Encryption.Message;
+
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static blockchain.Encryption.MineGenerator.verifySignature;
 
 public class Miner extends Thread {
     private final long id;
@@ -42,6 +46,8 @@ public class Miner extends Thread {
         synchronized (blockchain) {
             if (blockchain.validateBlockChain(block)) {
 
+                // verify messages
+
                 // set messages to a block
                 block.setMessagesData(blockchain.getMessageList());
                 blockchain.getBlocks().add(block);
@@ -53,15 +59,28 @@ public class Miner extends Thread {
         }
     }
 
-    private void sendMessage() {
+    private void sendMessage(){
         try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
+            Thread.sleep(500);
+            String messageData = id + ": " + "A".repeat(Math.max(1, new Random().nextInt(5)));
+            Message message = new Message(messageData);
+
+            // new message is bigger than the last
+            // id of message is bigger than id of block
+            // only if message is valid
+            Message lastMessage = null;
+            if (blockchain.getMessageList() != null && blockchain.getMessageList().size() > 0) {
+                lastMessage = blockchain.getMessageList().get(blockchain.getMessageList().size() - 1);
+            }
+
+            if ((lastMessage == null || message.getId() > lastMessage.getId())
+                    && message.getId() > blockchain.getBlocks().get(blockchain.getBlocks().size() - 1).getId() &&
+                    verifySignature(message.getMessageData(), message.getSignature(), message.getPublicKey())) {
+                blockchain.getMessageList().add(message);
+            }
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        String message = id + ": " + "A".repeat(Math.max(1, new Random().nextInt(5)));
-        blockchain.getMessageList().add(message);
     }
 
     @Override

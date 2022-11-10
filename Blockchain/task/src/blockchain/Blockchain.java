@@ -1,5 +1,7 @@
 package blockchain;
 
+import blockchain.Encryption.Message;
+
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -9,12 +11,11 @@ public class Blockchain {
 
     private int zeroesNumber;
 
-    private CopyOnWriteArrayList<String> messageList;
+    private CopyOnWriteArrayList<Message> messageList = new CopyOnWriteArrayList<>();
 
     public Blockchain() {
         this.blocks = new CopyOnWriteArrayList<>();
         zeroesNumber = 0;
-        this.messageList = new CopyOnWriteArrayList<>();
     }
 
     public List<Block> getBlocks() {
@@ -50,11 +51,11 @@ public class Blockchain {
         block.setN(zeroesNumber);
     }
 
-    public CopyOnWriteArrayList<String> getMessageList() {
+    public CopyOnWriteArrayList<Message> getMessageList() {
         return messageList;
     }
 
-    public void setMessageList(CopyOnWriteArrayList<String> messageList) {
+    public void setMessageList(CopyOnWriteArrayList<Message> messageList) {
         this.messageList = messageList;
     }
 
