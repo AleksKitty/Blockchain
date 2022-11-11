@@ -11,10 +11,10 @@ Miners make transaction with virtual coins between each other. Used private-publ
 
 **Example of output:**
 
-Block:
-Created by: miner0
-miner0 gets 100 VC
-Id: 1
+> Block:
+> Created by: miner0
+> miner0 gets 100 VC
+> Id: 1
 Timestamp: 1668176835398
 Magic number: 1
 Hash of the previous block: 
