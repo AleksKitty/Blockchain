@@ -9,5 +9,7 @@ First miner who found "magic number" add its' block to the blockchain.
 
 Miners make transaction with virtual coins between each other. Used private-public key encription technology.
 
+Example of output:
+
 
 P.S. User doesn't input here.
