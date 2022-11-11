@@ -44,7 +44,7 @@ public class Blockchain {
     void correctZeroNumber(Block block) {
         if (block.getGeneratedMilliSeconds() < 50) {
             zeroesNumber += 1;
-        } else {
+        } else if (zeroesNumber > 0) {
             zeroesNumber -= 1;
         }
         block.setN(zeroesNumber);
