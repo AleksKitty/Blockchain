@@ -12,7 +12,7 @@ public class Block {
      * */
     private final long id;
 
-    private final long minerId;
+    private final int minerId;
 
     /**
      * used in hash
@@ -34,7 +34,7 @@ public class Block {
      * */
     private String hash;
 
-    private long generatedSeconds;
+    private long generatedMilliSeconds;
 
     /**
      * number of zeroes for next blockchain
@@ -43,7 +43,7 @@ public class Block {
 
     private List<String> messagesData;
 
-    public Block(long id, long minerId, String previousHash) {
+    public Block(long id, int minerId, String previousHash) {
         this.id = id;
         this.minerId = minerId;
         this.timeStamp = new Date().getTime();
@@ -65,11 +65,15 @@ public class Block {
 
         this.magicNumber = magicNumber;
         this.hash = hash;
-        this.generatedSeconds = (endTime - startTime) / 1000;
+        this.generatedMilliSeconds = endTime - startTime;
     }
 
     public long getId() {
         return id;
+    }
+
+    public int getMinerId() {
+        return minerId;
     }
 
     public String getPreviousHash() {
@@ -80,8 +84,8 @@ public class Block {
         return hash;
     }
 
-    public long getGeneratedSeconds() {
-        return generatedSeconds;
+    public long getGeneratedMilliSeconds() {
+        return generatedMilliSeconds;
     }
 
     public void setN(int n) {
@@ -90,7 +94,7 @@ public class Block {
 
     public String printMessagesData() {
         if (messagesData.size() == 0) {
-            return " no messages\n";
+            return "\nNo transactions\n";
         }
 
         StringBuilder stringBuilder = new StringBuilder().append('\n');
@@ -114,14 +118,15 @@ public class Block {
     @Override
     public String toString() {
         return "Block:" + '\n' +
-                "Created by miner # " + minerId + '\n' +
+                "Created by: miner" + minerId + '\n' +
+                "miner" + minerId + " gets 100 VC" + '\n' +
                 "Id: " + id + '\n' +
                 "Timestamp: " + timeStamp + '\n' +
                 "Magic number: " + magicNumber + '\n' +
                 "Hash of the previous block: " + '\n' + previousHash + '\n' +
                 "Hash of the block: " + '\n' + hash + '\n' +
                 "Block data:" + printMessagesData() +
-                "Block was generating for " + generatedSeconds + " seconds\n" +
+                "Block was generating for " + generatedMilliSeconds / 1000 + " seconds\n" +
                 "N was increased to " + N + "\n";
     }
 }

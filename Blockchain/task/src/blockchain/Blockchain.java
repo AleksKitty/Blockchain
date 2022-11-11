@@ -42,12 +42,11 @@ public class Blockchain {
     }
 
     void correctZeroNumber(Block block) {
-        if (block.getGeneratedSeconds() < 60) {
-            zeroesNumber = zeroesNumber + 1;
+        if (block.getGeneratedMilliSeconds() < 50) {
+            zeroesNumber += 1;
         } else {
-            zeroesNumber = zeroesNumber - 1;
+            zeroesNumber -= 1;
         }
-
         block.setN(zeroesNumber);
     }
 
@@ -62,7 +61,7 @@ public class Blockchain {
     void printBlockchain() {
         int i = 0;
         Iterator<Block> it = blocks.iterator();
-        while (it.hasNext() && i < 5) {
+        while (it.hasNext() && i < 15) {
             System.out.println(it.next());
             i++;
         }
